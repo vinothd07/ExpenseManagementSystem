@@ -1,0 +1,44 @@
+<div *ngIf="route.children.length === 0">
+  <div class="headerSection" nz-row>
+    <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12">
+      <h3>Expenses</h3>
+    </div>
+    <div nz-col nzXs="12" nzSm="12" nzMd="12" nzLg="12" nzXl="12" style="text-align: right">
+      <button nz-button [nzSize]="'small'" nzType="primary" (click)="AddExpense()">Add Expense</button>
+    </div>
+  </div>
+  <div style="padding:24px; background: #fff; min-height: 200px;min-width: 800px;">
+    <div class="ExpensesList">
+      <nz-table #basicTable [nzData]="listOfExpenses" [nzSize]="'middle'" [nzPageSize]="5"
+        [nzPageSizeOptions]="[5, 10, 20, 30, 40]" [nzShowSizeChanger]="true">
+        <thead>
+          <tr>
+            <th>#No</th>
+            <th>Category</th>
+            <th>Item Name</th>
+            <th>Amount</th>
+            <th>Expense Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data; let i = index;">
+            <td [ngClass]="{'nonstrike': data.Active, 'strike': !data.Active}">{{ i+1 }}</td>
+            <td [ngClass]="{'nonstrike': data.Active, 'strike': !data.Active}">{{ data.Category }}</td>
+            <td [ngClass]="{'nonstrike': data.Active, 'strike': !data.Active}">{{ data.Item }}</td>
+            <td [ngClass]="{'nonstrike': data.Active, 'strike': !data.Active}">{{ data.Amount }}</td>
+            <td [ngClass]="{'nonstrike': data.Active, 'strike': !data.Active}">{{ data.ExpenseDate }}</td>
+            <td>
+              <a routerLink="/expense/edit/{{i}}">Edit</a> &nbsp;
+              <a *ngIf="data.Active" nz-popconfirm nzTitle="Are you sure delete this expense?"
+                (nzOnConfirm)="DeleteExpense(i)" (nzOnCancel)="cancelAction()">Delete</a>
+              <a *ngIf="!data.Active" nz-popconfirm nzTitle="Are you sure restore this expense?"
+                (nzOnConfirm)="RestoreExpense(i)" (nzOnCancel)="cancelAction()">Undo</a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

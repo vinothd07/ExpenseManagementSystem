@@ -1,0 +1,69 @@
+<nz-tabset style="max-height:auto;" [nzTabPosition]="nzTabPosition" [(nzSelectedIndex)]="selectedIndex"
+  (nzSelectChange)="log([$event])">
+  <nz-tab [nzTitle]="'Budget'">
+    <div style="padding:24px; background: #fff; min-height: 200px;min-width: 800px;max-width: 75%;">
+      <form nz-form [formGroup]="BudgetForm" (ngSubmit)="UpdateBudget()">
+        <h3>Update Budget</h3>
+        <nz-form-item></nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="BudgetAmount" nzRequired>
+            <span>
+              Budget Value
+            </span>
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-input-number [(ngModel)]="Budget.Amount" [nzStep]="1" [nzFormatter]="formatterRupee"
+              [nzParser]="parserRupee" formControlName="BudgetAmount" style="min-width: 250px;"></nz-input-number>
+            <button nz-button nzType="primary" style="margin-left: 25px">Update</button>
+            <nz-form-explain *ngIf="BudgetForm.get('BudgetAmount')?.dirty && BudgetForm.get('BudgetAmount')?.errors">
+              Please enter the amount!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </nz-tab>
+  <nz-tab [nzTitle]="'Categories'">
+    <div style="padding:24px; background: #fff; min-height: 360px;min-width: 800px;max-width: 85%;">
+      <form nz-form [formGroup]="CategoryForm" (ngSubmit)="addCategory()">
+        <h3>Add Category</h3>
+        <nz-form-item></nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CategoryName" nzRequired>
+            <span>
+              Category Name
+            </span>
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input id="CategoryName" [(ngModel)]="Category.Name" formControlName="CategoryName"
+              style="max-width: 250px;" />
+            <button nz-button nzType="primary" style="margin-left: 40px">Add</button>
+            <nz-form-explain *ngIf="CategoryForm.get('CategoryName')?.dirty && CategoryForm.get('CategoryName')?.errors">
+              Please enter the category name!</nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <div style="margin-top: 75px;">
+        <nz-table #basicTable [nzData]="listOfCategories" [nzSize]="'middle'" [nzPageSize]="5"
+          [nzPageSizeOptions]="[5, 10, 20, 30, 40]" [nzShowSizeChanger]="true">
+          <thead>
+            <tr>
+              <th>#No.</th>
+              <th>Category Name</th>
+              <th>Created At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data; let i = index">
+              <td [ngClass]="{'nonstrike': data.Active, 'strike': !data.Active}">{{ i+1 }}</td>
+              <td [ngClass]="{'nonstrike': data.Active, 'strike': !data.Active}">{{ data.Name }}</td>
+              <td [ngClass]="{'nonstrike': data.Active, 'strike': !data.Active}">{{ data.CreatedAt }}</td>
+              <td *ngIf="data.Active"><a nz-popconfirm nzTitle="Are you sure delete this category?" (nzOnConfirm)="DeleteCategory(i)" (nzOnCancel)="cancelAction()">Delete</a></td>
+              <td *ngIf="!data.Active"><a nz-popconfirm nzTitle="Are you sure restore this category?" (nzOnConfirm)="UndoCategory(i)" (nzOnCancel)="cancelAction()">Undo</a></td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-tab>
+</nz-tabset>

@@ -1,0 +1,81 @@
+<div nz-row>
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12" nzXl="12" style="overflow-y: hidden;height: 380px;">
+    <div style="margin:8px 8px" class="chartContainer">
+      <h4>Summary</h4>
+      <hr>
+      <div nz-row>
+        <div nz-col nzXs="24" nzSm="24" nzMd="18" nzLg="18" nzXl="18" style="min-height: 310px;">
+          <ngx-charts-pie-grid [scheme]="colorScheme" [results]="NormalSummary" (select)="onSelect($event)">
+          </ngx-charts-pie-grid>
+        </div>
+        <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="6" nzXl="6" style="position:relative;min-height: 310px;">
+          <div class="summary">
+            <h3 style="margin-bottom: 0;">Total Budget</h3>
+            <p>{{ TotalBudget }}</p>
+            <br>
+            <h3 style="margin-bottom: 0;">Total Expense</h3>
+            <p>{{ TotalExpense }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12" nzXl="12" style="overflow-y: hidden;height: 380px;">
+    <div class="chartContainer" style="margin:8px 8px;">
+      <h4>Top 5 Category <span style="font-size: 12px">(In Rupees)</span></h4>
+      <hr>
+      <div style="min-height: 310px;">
+        <ngx-charts-advanced-pie-chart [scheme]="colorScheme" [results]="Top3Category" (select)="onSelect($event)">
+        </ngx-charts-advanced-pie-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div nz-row style="margin-top: 10px;">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="10" nzXl="10" style="overflow-y: hidden;height: 500px;">
+    <div class="chartContainer" style="margin:8px 8px;">
+      <h4>Budget Summary</h4>
+      <hr>
+      <div style="min-height: 420px;">
+        <ngx-charts-bar-horizontal [scheme]="colorScheme" [results]="BudgetSummary" [gradient]="gradient"
+          [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel"
+          [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [showDataLabel]="true"
+          (select)="onSelect($event)">
+        </ngx-charts-bar-horizontal>
+      </div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="14" nzXl="14" style="overflow-y: hidden;height: 500px;">
+    <div class="chartContainer" style="margin:8px 8px;" *ngIf="CategoryWiseSummary.length <= 5">
+      <h4>Category wise summary</h4>
+      <hr>
+      <div style="min-height: 420px;">
+        <ngx-charts-pie-chart [scheme]="colorScheme" [results]="CategoryWiseSummary" [legend]="true"
+          [explodeSlices]="false" [labels]="true" [doughnut]="false" [gradient]="gradient" (select)="onSelect($event)">
+        </ngx-charts-pie-chart>
+      </div>
+    </div>
+    <div class="chartContainer" style="margin:8px 8px; min-height: 500px" *ngIf="CategoryWiseSummary.length > 5">
+      <h4>Category wise summary <span style="font-size: 12px"></span></h4>
+      <hr>
+      <nz-table #basicTable [nzData]="CategoryWiseSummary" [nzSize]="'middle'" [nzPageSize]="5"
+        [nzPageSizeOptions]="[5, 10, 20, 30, 40]" [nzShowSizeChanger]="true" style="margin-top: 50px">
+        <thead>
+          <tr>
+            <th>#No</th>
+            <th>Category</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data; let i = index;">
+            <td>{{ i+1 }}</td>
+            <td>{{ data.name }}</td>
+            <td>Rs {{ data.value }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</div>

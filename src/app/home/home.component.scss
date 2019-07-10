@@ -1,0 +1,14 @@
+.chartContainer{
+    padding:14px 24px 24px 24px; 
+    background: #fff; 
+    min-height: 285px;
+    position: relative;
+    // margin-left: 20px;
+    .summary{
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 80%;
+        transform: translate(-80%, -50%);
+    }
+}

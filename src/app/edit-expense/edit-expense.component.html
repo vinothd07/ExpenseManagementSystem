@@ -1,0 +1,53 @@
+<h3>Update Expense</h3>
+<div nz-row style="padding:24px; background: #fff; min-height: 250px;min-width: 45%;max-width: 48%">
+  <div nz-col [nzSm]="24" [nzXs]="24">
+    <form nz-form [formGroup]="ExpenseForm" (ngSubmit)="UpdateExpense()">
+      <nz-form-item></nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Category" nzRequired>
+          <span>
+            Category
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select id="Category" [(ngModel)]="Expense.Category" formControlName="Category" style="max-width: auto;">
+            <nz-option *ngFor="let category of CategoryList" nzLabel="{{category.Name}}" [nzValue]="category.Name">
+            </nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="ExpenseForm.get('Category')?.dirty && ExpenseForm.get('Category')?.errors">
+            Please select the Category!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Itemname" nzRequired>
+          <span>
+            Item Name
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <input nz-input id="Item" [(ngModel)]="Expense.Item" formControlName="Item" style="max-width: auto;" />
+          <nz-form-explain *ngIf="ExpenseForm.get('Item')?.dirty && ExpenseForm.get('Item')?.errors">
+            Please enter the item!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Amount" nzRequired>
+          <span>
+            Amount
+          </span>
+        </nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-input-number [(ngModel)]="Expense.Amount" [nzStep]="1" [nzFormatter]="formatterRupee"
+            [nzParser]="parserRupee" formControlName="Amount" style="min-width: 60%;"></nz-input-number>
+          <nz-form-explain *ngIf="ExpenseForm.get('Amount')?.dirty && ExpenseForm.get('Amount')?.errors">
+            Please enter the amount!</nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item nz-row style="margin-top: 35px; margin-bottom:20px; text-align: center">
+        <nz-form-control>
+          <button nz-button nzType="primary">Update</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>

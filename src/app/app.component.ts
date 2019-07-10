@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ExpenseManagementSystem';
+  isCollapsed = false;
+  triggerTemplate: TemplateRef<void> | null = null;
+  @ViewChild('trigger') customTrigger: TemplateRef<void>;
+
+
+  changeTrigger(): void {
+    this.triggerTemplate = this.customTrigger;
+  }
 }

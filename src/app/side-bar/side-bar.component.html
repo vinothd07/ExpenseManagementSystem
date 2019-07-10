@@ -1,0 +1,20 @@
+<div class="logo">
+    <img src="https://www.squareyards.com/micro/emprasa-bangalore/assets/images/team/appiness-logo.png" style="width: 100%; padding: 12px 0;" />
+</div>
+<ul nz-menu [nzTheme]="'dark'" [nzMode]="'inline'" [nzInlineCollapsed]="isCollapsed">
+  <a [routerLink]="['/home']">
+    <li nz-menu-item [nzSelected]="(UrlState.includes('home') || UrlState == '/') ? 'true' : 'false'">
+      <span><i nz-icon type="home"></i><span class="nav-text">Home</span></span>
+    </li>
+  </a>
+  <a [routerLink]="['/expense']">
+    <li nz-menu-item [nzSelected]="UrlState.includes('expense') ? 'true' : 'false'">
+      <span><i nz-icon nzType="credit-card" nzTheme="outline"></i><span class="nav-text">Expense</span></span>
+    </li>
+  </a>
+  <a [routerLink]="['/settings']">
+    <li nz-menu-item [nzSelected]="UrlState.includes('setting') ? 'true' : 'false'">
+      <span><i nz-icon type="setting"></i><span class="nav-text">Settings</span></span>
+    </li>
+  </a>
+</ul>
